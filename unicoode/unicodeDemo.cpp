@@ -26,8 +26,8 @@ void printCard(wchar_t s[], wchar_t r[]) {
 }
 
 // print an entire hand of cards
-void printHand(wchar_t** hand) {
-	for (int i = 0; i < 3; i += 2)
+void printHand(wchar_t** hand, int numCards) {
+	for (int i = 0; i < numCards*2; i += 2)
 		printCard(hand[i], hand[i + 1]);
 }
 
@@ -60,13 +60,16 @@ int main() {
 	delete[] suit;
 	delete[] rank;
 
-	wchar_t** hand = new wchar_t*[6];
+	//each card takes two hand[] indices
+	wchar_t** hand = new wchar_t*[7];
 	hand[0] = new wchar_t[2] {HEART};
-	hand[1] = new wchar_t[2] {L"Q"};
+	hand[1] = new wchar_t[2] {L"K"};
 	hand[2] = new wchar_t[2] {HEART};
-	hand[3] = new wchar_t[2] {L"A"};
+	hand[3] = new wchar_t[2] {L"Q"};
+	hand[4] = new wchar_t[2] {HEART};
+	hand[5] = new wchar_t[2] {L"J"};
 
-	printHand(hand);
+	printHand(hand, 3);
 
 	return 0;
 }
