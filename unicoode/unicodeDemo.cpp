@@ -2,6 +2,7 @@
 #include <fcntl.h>  // _O_U16TEXT
 #include <io.h>  //_setmode()
 #include <cwchar>
+#include <utility>
 
 
 using namespace std;
@@ -11,23 +12,30 @@ using namespace std;
 #define HEART L"\x2665"
 
 
+// print individual card
 void printCard(wchar_t s[], wchar_t r[]) {
 	wprintf(L" -----\n");
 	wprintf(L"|   %ls |\n", s);  //prints the suite symbol
 	if (wcscmp(r, L"10") != 0)
-		wprintf(L"|  %ls  |\n", r);  // prints the rank 
+		wprintf(L"|  %ls  |\n", r);  // prints single character rank 
 	else
-		wprintf(L"| %ls  |\n", r);  // prints the rank
+		wprintf(L"| %ls  |\n", r);  // prints multi-character rank
 	wprintf(L"|     |\n");
 	wprintf(L"|     |\n");
 	wprintf(L" -----\n");
+}
+
+// print an entire hand of cards
+void printHand(wchar_t** hand) {
+	for (int i = 0; i < 3; i += 2)
+		printCard(hand[i], hand[i + 1]);
 }
 
 int main() {
 	_setmode(_fileno(stdout), _O_U16TEXT);
 	wchar_t* suit;	//holds the suit symbol
 	wchar_t* rank;	//holds the card rank
-	
+
 	suit = new wchar_t[2] {SPADE};
 	rank = new wchar_t[2] {L"J"};
 	printCard(suit, rank);
@@ -43,7 +51,7 @@ int main() {
 	suit = new wchar_t[2] {DIAMOND};
 	rank = new wchar_t[2] {L"A"};
 	printCard(suit, rank);
-	delete [] suit;
+	delete[] suit;
 	delete[] rank;
 
 	suit = new wchar_t[2] {HEART};
@@ -51,5 +59,14 @@ int main() {
 	printCard(suit, rank);
 	delete[] suit;
 	delete[] rank;
+
+	wchar_t** hand = new wchar_t*[6];
+	hand[0] = new wchar_t[2] {HEART};
+	hand[1] = new wchar_t[2] {L"Q"};
+	hand[2] = new wchar_t[2] {HEART};
+	hand[3] = new wchar_t[2] {L"A"};
+
+	printHand(hand);
+
 	return 0;
 }
