@@ -15,4 +15,5 @@ int main(char* args[], int argc) {
 	cout << "Size of long double : " << sizeof(long double) << endl;
 
 	cout << "max char value: " << UCHAR_MAX << endl;
+	system("pause");
 }
